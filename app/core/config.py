@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings
+from pydantic.error_wrappers import ValidationError
 import os
 
 class Settings(BaseSettings):
@@ -15,4 +16,7 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
 
-settings = Settings()
+try:
+    settings = Settings()
+except ValidationError as e:
+    print(f"Error loading settings: {e}")
